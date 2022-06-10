@@ -19,6 +19,7 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
+	github.com/hashicorp/golang-lru v0.5.5-0.20200511160909-eb529947af53 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
 	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2 // indirect
@@ -26,6 +27,7 @@ require (
 
 require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
+	github.com/go-chi/stampede v0.5.1
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect

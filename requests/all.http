@@ -40,3 +40,11 @@ Content-Type: {{contentType}}
 {
     "email": "f@yandex.ru"
 }
+
+###
+
+GET  http://{{host}}/api/v1/imx/config/providers HTTP/1.1
+
+###
+
+GET  http://{{host}}/api/v1/imx/config/mx-servers HTTP/1.1

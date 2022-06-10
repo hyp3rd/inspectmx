@@ -67,3 +67,20 @@ func (rd *InspectorResponse) Render(w http.ResponseWriter, r *http.Request) erro
 
 	return nil
 }
+
+type ListResponse struct {
+	AllowList []string `json:"allow_list"`
+	// We add an additional field to the response here.
+}
+
+func NewListResponse(l []string) *ListResponse {
+	resp := &ListResponse{AllowList: l}
+
+	return resp
+}
+
+func (rd *ListResponse) Render(w http.ResponseWriter, r *http.Request) error {
+	// Pre-processing before a response is marshalled and sent across the wire
+
+	return nil
+}

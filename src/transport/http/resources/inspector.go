@@ -28,6 +28,13 @@ func (rs InspectorResource) Routes() http.Handler {
 		}),
 	))).Post("/", rs.Verify) // POST /users
 
+	router.Route("/config", func(r chi.Router) {
+		r.Use(GlobalResource{}.CacheHandler())
+		r.Get("/providers", rs.GetAllowedProviders) // GET
+		r.Get("/mx-servers", rs.GetAllowedServers)  // GET
+
+	})
+
 	return router
 }
 
@@ -56,4 +63,16 @@ func (rs InspectorResource) Verify(w http.ResponseWriter, r *http.Request) {
 	}
 	i.Valid = (i.Status == "")
 	render.Render(w, r, payloads.NewInspectorResponse(&i))
+}
+
+func (rs InspectorResource) GetAllowedProviders(w http.ResponseWriter, r *http.Request) {
+	res := service.Instance().Inspector.GetAllowedProviders(r.Context())
+
+	render.Render(w, r, payloads.NewListResponse(res))
+}
+
+func (rs InspectorResource) GetAllowedServers(w http.ResponseWriter, r *http.Request) {
+	res := service.Instance().Inspector.GetAllowedServers(r.Context())
+
+	render.Render(w, r, payloads.NewListResponse(res))
 }
