@@ -6,7 +6,6 @@ import (
 
 	"io.hyperd/inspectmx"
 	"io.hyperd/inspectmx/logger"
-	"io.hyperd/inspectmx/middlewares/guard"
 	"io.hyperd/inspectmx/middlewares/validator"
 )
 
@@ -29,20 +28,12 @@ func (rs *InspectorRequest) Bind(r *http.Request) error {
 	if rs.Inspector == nil {
 		return errors.New("missing required Inspector fields")
 	}
-	// post-process after a decode
-	err := guard.Instance().Sanitizer.Sanitize(rs.Inspector)
 
+	// rs.Email = guard.Instance().Strict.Sanitize(rs.Email)
+
+	err := validator.Validate().Struct(rs.Inspector)
 	if err != nil {
-		logger.Error("failed sanitizing tag", logger.WithFields{
-			"error": err,
-		})
-	}
-
-	rs.Inspector.Email = guard.Instance().Strict.Sanitize(rs.Inspector.Email)
-
-	err = validator.Validate().Struct(rs.Inspector.Email)
-	if err != nil {
-		logger.Error("failed validating tag", logger.WithFields{
+		logger.Error("failed validating the user input", logger.WithFields{
 			"error": err,
 		})
 

@@ -47,6 +47,7 @@ type RedisConfig struct {
 
 type EmailConfig struct {
 	AllowedProviders []string `mapstructure:"allowed_providers"`
+	ExtraMX          []string `mapstructure:"extra_mx"`
 }
 
 func Instance() IMXConfig {
@@ -66,7 +67,7 @@ func Instance() IMXConfig {
 		// setup viper and populate the instance config obj
 		viper.SetConfigName(".config")
 		viper.SetConfigType("yml")
-		// viper.AddConfigPath(".config/" + env + "/")
+		viper.AddConfigPath("/")
 
 		if err := viper.ReadInConfig(); err != nil { // Find and read the config file
 			exit(err)

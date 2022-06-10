@@ -3,10 +3,40 @@
 @host = {{hostname}}:{{port}}
 @contentType = application/json
 
-# @name inspect
+# @name inspectGmail
 POST http://{{host}}/api/v1/imx HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "email":            "francesco.cosentino@ing.com",
+    "email": "fc@hyperd.sh"
+}
+
+###
+
+# @name inspectProton
+POST http://{{host}}/api/v1/imx HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "f@pm.me"
+}
+
+###
+
+# @name inspectAndValidateExtras
+POST http://{{host}}/api/v1/imx HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "f@yahoo.co.uk"
+}
+
+###
+
+# @name inspectAndReject
+POST http://{{host}}/api/v1/imx HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email": "f@yandex.ru"
 }

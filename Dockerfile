@@ -1,8 +1,7 @@
 ##### Build the Go binary first from Go build image
 FROM golang:alpine AS builder
-COPY ./certs/* ./certs/
-RUN apk --no-cache --no-progress add git upx ca-certificates && \
-  cat ./certs/*.pem >> /etc/ssl/certs/ca-certificates.crt
+
+RUN apk --no-cache --no-progress add git upx
 
 
 COPY . /go/src/inspectmx/

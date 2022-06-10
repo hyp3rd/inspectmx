@@ -18,4 +18,19 @@ environment:
   log_level: "debug"  # allowed values: "debug" || "info" || "warn"
 
 email:
-  allowed_providers: ["proton.me", "google.com"]
+  allowed_providers: [
+    "proton.me",
+    "gmail.com",
+    "outlook.com",
+    "hotmail.com",
+    "gmx.com",
+    "yahoo.com"
+  ]
+  extra_mx: [
+    "alt2.aspmx.l.google.com.",
+    "aspmx.l.google.com.",
+    "alt3.aspmx.l.google.com.",
+    "alt4.aspmx.l.google.com.",
+    "alt1.aspmx.l.google.com.",
+    "mx-eu.mail.am0.yahoodns.net."
+  ]

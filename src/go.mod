@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/cors v1.2.1
+	github.com/go-chi/httprate v0.5.3
 	github.com/go-chi/render v1.0.1
 	github.com/go-sanitize/sanitize v1.0.1
 	github.com/microcosm-cc/bluemonday v1.0.18
@@ -14,6 +15,7 @@ require (
 
 require (
 	github.com/aymerick/douceur v0.2.0 // indirect
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect

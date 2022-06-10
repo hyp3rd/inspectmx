@@ -3,7 +3,6 @@ package inspectmx
 import (
 	"context"
 	"fmt"
-	"net"
 	"strings"
 	"sync"
 
@@ -29,7 +28,7 @@ func instance() *inspectMX {
 		}
 
 		for _, provider := range config.Instance().Email.AllowedProviders {
-			mxrecords, err := net.LookupMX(provider)
+			mxrecords, err := helpers.MxLookup(provider)
 			if err != nil {
 				logger.Error("failed to resolve a provider", logger.WithFields{
 					"provider": provider,
@@ -38,6 +37,8 @@ func instance() *inspectMX {
 			for _, mx := range mxrecords {
 				imxInstance.AllowedServers = append(imxInstance.AllowedServers, mx.Host)
 			}
+
+			imxInstance.AllowedServers = append(imxInstance.AllowedServers, config.Instance().Email.ExtraMX...)
 		}
 
 		logger.Info("allowed email providers", logger.WithFields{
@@ -86,26 +87,29 @@ func (s service) Verify(email string, ctx context.Context) (*string, error) {
 			"username": username,
 		})
 
-		mxrecords, err := net.LookupMX(domain)
+		mxrecords, err := helpers.MxLookup(domain)
+
+		if err != nil {
+			logger.Error("MX lookup failed", logger.WithFields{
+				"domain": domain,
+			})
+			err = fmt.Errorf("mx lookup failed for %s", domain)
+			return nil, err
+		}
 
 		for _, m := range mxrecords {
 			if helpers.FindElementInArray(instance().AllowedServers, m.Host) {
 				return &m.Host, nil
 			}
 		}
+		err = fmt.Errorf("%s is not a valid provider", domain)
+		return &domain, err
 
-		if err != nil {
-			logger.Error("MX lookup failed", logger.WithFields{
-				"domain": domain,
-			})
-			err = fmt.Errorf("mx lookup failed for %q", domain)
-			return nil, err
-		}
 	} else {
 		logger.Error("invalid email address", logger.WithFields{
 			"email": email,
 		})
-		err = fmt.Errorf("invalid email address: %q", email)
+		err = fmt.Errorf("invalid email address: %s", email)
 	}
 
 	return nil, err
