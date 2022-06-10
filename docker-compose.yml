@@ -1,0 +1,35 @@
+---
+version: "3.8"
+
+services:
+  redis-store:
+    image: 'bitnami/redis:latest'
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory 100mb
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+      - REDIS_PASSWORD=k7oMs2G5bc4mRN45jPZjLBZxuMFrCLahvPn648Zwq1lT41gSYZqapBRnSF2L995FaYcZBz8c7xkKXku94HeReDgdwBu1N4CzgfQ94Z504hjfzrST1u0idVkbXe8ust
+      # - REDIS_ACLFILE=/opt/bitnami/redis/mounted-etc/users.acl
+    volumes:
+      - ./redis-persistence:/bitnami/redis/data
+      # - /path/to/users.acl:/opt/bitnami/redis/mounted-etc/users.acl
+    networks:
+      - session-store
+  imx:
+    image: inspectmx:latest
+    networks:
+      - imxnet
+      - session-store
+    ports:
+      - "8443:8443"
+      - "3000:3000"
+    depends_on:
+      - redis-store
+    # restart: never
+networks:
+  session-store: null
+  imxnet:
+    # enable_ipv6: false
+    driver: overlay
+    # driver_opts:
+    #   com.docker.network.enable_ipv6: "false"

@@ -1,0 +1,21 @@
+---
+
+paths:
+  tls_cert: "/etc/tls/certs/hyperd.thekingfisher.io.crt"
+  tls_key: "/etc/tls/certs/hyperd.thekingfisher.io.key"
+
+server:
+  http_port: 3000
+  tls_port: 8443
+
+redis:
+  address: redis-store:6379
+  password: k7oMs2G5bc4mRN45jPZjLBZxuMFrCLahvPn648Zwq1lT41gSYZqapBRnSF2L995FaYcZBz8c7xkKXku94HeReDgdwBu1N4CzgfQ94Z504hjfzrST1u0idVkbXe8ust
+  db: 15
+
+environment:
+  development: True
+  log_level: "debug"  # allowed values: "debug" || "info" || "warn"
+
+email:
+  allowed_providers: ["proton.me", "google.com"]

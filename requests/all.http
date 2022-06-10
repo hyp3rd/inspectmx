@@ -1,0 +1,12 @@
+@hostname = {{$dotenv HOSTNAME}}
+@port = {{$dotenv PORT}}
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+# @name inspect
+POST http://{{host}}/api/v1/imx HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "email":            "francesco.cosentino@ing.com",
+}
